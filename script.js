@@ -1,20 +1,17 @@
 const canvas = document.getElementById("asciibrot");
 const ctx = canvas.getContext("2d");
-var imageData = ctx.createImageData(canvas.width, canvas.height);
-var data = imageData.data
+ctx.imageSmoothingEnabled = false;
 
-const txtfile = "txt/beemovie.txt"
-fetch(txtfile)
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("placeholder").textContent = data;
-    });
+const buffer = document.createElement("canvas");
+const bufferCtx = buffer.getContext("2d");
+buffer.width = 160;
+buffer.height = 90;
+const pixels = bufferCtx.createImageData(buffer.width, buffer.height);
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    imageData = ctx.createImageData(canvas.width, canvas.height);
-    data = imageData.data;
+    ctx.imageSmoothingEnabled = false;
 }
 
 window.addEventListener('resize', resizeCanvas);
@@ -24,19 +21,24 @@ function updateFrame(offset) {
     requestAnimationFrame(updateFrame);
     
     // throtle
-    if (offset - previousOffset < 32) return;
-    previousOffset = offset;
+    // if (offset - previousOffset < 16) return;
+    // previousOffset = offset;
     
-    for (let y = 0; y < canvas.height; y++) {
-        for (let x = 0; x < canvas.width; x++) {
-            let index = (y*canvas.width+x)*4;
-            data[index] = ((x+y)/2+offset/8)%256;
-            data[index+1] = ((2*x+y)/3+offset/12)%256;
-            data[index+2] = ((x+2*y)/3+offset/16)%256;
-            data[index+3] = 255;
+    for (let y = 0; y < buffer.height; y++) {
+        for (let x = 0; x < buffer.width; x++) {
+            let index = (y*buffer.width + x)*4;
+            pixels.data[index] = ((4*x+4*y)+offset/8)%256;
+            pixels.data[index+1] = ((8*x+4*y)+offset/12)%256;
+            pixels.data[index+2] = ((4*x+8*y)+offset/16)%256;
+            pixels.data[index+3] = 255;
         } 
     }
-    ctx.putImageData(imageData, 0, 0);
+
+    bufferCtx.putImageData(pixels, 0, 0);
+    ctx.drawImage(buffer, 
+        0, 0, buffer.width, buffer.height,
+        0, 0, canvas.width, canvas.height
+    );
 }
 
 resizeCanvas();
