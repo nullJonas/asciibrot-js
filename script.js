@@ -5,7 +5,7 @@ var data = imageData.data
 
 const txtfile = "txt/beemovie.txt"
 fetch(txtfile)
-    .then(response => respone.text())
+    .then(response => response.text())
     .then(data => {
         document.getElementById("placeholder").textContent = data;
     });
