@@ -3,6 +3,13 @@ const ctx = canvas.getContext("2d");
 var imageData = ctx.createImageData(canvas.width, canvas.height);
 var data = imageData.data
 
+const txtfile = "txt/beemovie.txt"
+fetch(txtfile)
+    .then(response => respone.text())
+    .then(data => {
+        document.getElementById("placeholder").textContent = data;
+    });
+
 function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
@@ -12,7 +19,14 @@ function resizeCanvas() {
 
 window.addEventListener('resize', resizeCanvas);
 
+var previousOffset = 0;
 function updateFrame(offset) {
+    requestAnimationFrame(updateFrame);
+    
+    // throtle
+    if (offset - previousOffset < 32) return;
+    previousOffset = offset;
+    
     for (let y = 0; y < canvas.height; y++) {
         for (let x = 0; x < canvas.width; x++) {
             let index = (y*canvas.width+x)*4;
@@ -23,7 +37,6 @@ function updateFrame(offset) {
         } 
     }
     ctx.putImageData(imageData, 0, 0);
-    requestAnimationFrame(updateFrame);
 }
 
 resizeCanvas();

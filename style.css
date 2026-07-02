@@ -1,2 +1,27 @@
-body, html { margin: 0; padding: 0; overflow: hidden; }
-canvas { display: block; }
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+    display: block;
+    z-index: 0;
+}
+
+.wrapper {
+    height: 100vh;
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    z-index: 1;
+    text-align: justify;
+
+    /* cutout effect */
+    color: white;
+    background-color: black;
+    mix-blend-mode: multiply;
+}
