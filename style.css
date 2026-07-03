@@ -25,6 +25,7 @@ canvas {
     z-index: 1;
     text-align: justify;
     font-family: monospace;
+    font-size: 10px;
 
     /* cutout effect */
     color: white;

@@ -1,5 +1,5 @@
-const WIDTH = 512;
-const HEIGHT = 288;
+const WIDTH = 256;
+const HEIGHT = 144;
 const SCALE = 5 / WIDTH;
 const A_OFFSET = -0.3 - WIDTH * SCALE/2;
 const B_OFFSET = HEIGHT * SCALE/2;
