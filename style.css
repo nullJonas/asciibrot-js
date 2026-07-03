@@ -8,6 +8,11 @@ canvas {
     position: absolute;
     display: block;
     z-index: 0;
+
+    /* how do you center a div lmao */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .wrapper {
@@ -19,6 +24,7 @@ canvas {
     position: absolute;
     z-index: 1;
     text-align: justify;
+    font-family: monospace;
 
     /* cutout effect */
     color: white;
